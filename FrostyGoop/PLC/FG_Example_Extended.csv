@@ -211,7 +211,22 @@ SBR-001010,"Switch in Run Bit",false,"0",,,,,,,"Active if CPU Switch is up (Run)
 SBR-001011,"Switch in Stop Bit",false,"0",,,,,,,"Active if CPU Switch is down (Stop)",,,,false,,"SBR",,false
 S16-000001,"TempActual",true,"733",400001,400001,,,,,"The Actual Temperature",false,false,"0",false,,"S16",,false
 S16-000008,"TempDisplay",true,"733",400002,400002,,,,,,false,false,"0",false,,"S16",,false
+SSTRUC-000003,"TempRead",false,,,,,,,,"System Structure for Modbus Read",,,,false,,"SSTRUC","MRX",false
+C-000013,"TempRead.Complete",false,"0",,,,,,,,false,false,"0",false,,"C","MRX",false
+C-000015,"TempRead.Error",false,"0",,,,,,,,false,false,"0",false,,"C","MRX",false
+STR-000002,"TempRead.ExcResponse",false,,,,15,,,,,,,,false,,"STR","MRX",false
+C-000012,"TempRead.InProgress",false,"0",,,,,,,,false,false,"0",false,,"C","MRX",false
+C-000014,"TempRead.Success",false,"0",,,,,,,,false,false,"0",false,,"C","MRX",false
+C-000016,"TempRead.Timeout",false,"0",,,,,,,,false,false,"0",false,,"C","MRX",false
+S16-000009,"TempRemote",false,"0",,,,,,,,false,false,"0",false,,"S16",,false
 SWR-001507,"Total Scan Count1",false,"0",,,,,,,"Total number of scans since entering Run mode (S32 low word)",,,,false,,"SWR",,false
 SWR-001508,"Total Scan Count2",false,"0",,,,,,,"Total number of scans since entering Run mode (S32 high word)",,,,false,,"SWR",,false
+SSTRUC-000004,"ValveWrite",false,,,,,,,,"System Structure for Modbus Write",,,,false,,"SSTRUC","MWX",false
+C-000018,"ValveWrite.Complete",false,"0",,,,,,,,false,false,"0",false,,"C","MWX",false
+C-000020,"ValveWrite.Error",false,"0",,,,,,,,false,false,"0",false,,"C","MWX",false
+STR-000003,"ValveWrite.ExcResponse",false,,,,15,,,,,,,,false,,"STR","MWX",false
+C-000017,"ValveWrite.InProgress",false,"0",,,,,,,,false,false,"0",false,,"C","MWX",false
+C-000019,"ValveWrite.Success",false,"0",,,,,,,,false,false,"0",false,,"C","MWX",false
+C-000021,"ValveWrite.Timeout",false,"0",,,,,,,,false,false,"0",false,,"C","MWX",false
 SBR-001016,"Watchdog Timeout",false,"0",,,,,,,"Active if the overall scan time (logic and I/O) has exceeded the limit set in the project",,,,false,,"SBR",,false
 DO-0.1.1.1,"doOpenValve",false,"0",000001,000001,,,,,,false,false,"0",false,"DO-0.1.1.1","DO",,false

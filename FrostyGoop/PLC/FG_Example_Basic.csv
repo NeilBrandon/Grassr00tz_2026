@@ -210,7 +210,20 @@ SBR-001010,"Switch in Run Bit",false,"0",,,,,,,"Active if CPU Switch is up (Run)
 SBR-001011,"Switch in Stop Bit",false,"0",,,,,,,"Active if CPU Switch is down (Stop)",,,
 S16-000001,"TempActual",true,"733",400001,400001,,,,,"The Actual Temperature",false,false,"0"
 S16-000008,"TempDisplay",true,"733",400002,400002,,,,,,false,false,"0"
+C-000013,"TempRead.Complete",false,"0",,,,,,,,false,false,"0"
+C-000015,"TempRead.Error",false,"0",,,,,,,,false,false,"0"
+STR-000002,"TempRead.ExcResponse",false,,,,15,,,,,,,
+C-000012,"TempRead.InProgress",false,"0",,,,,,,,false,false,"0"
+C-000014,"TempRead.Success",false,"0",,,,,,,,false,false,"0"
+C-000016,"TempRead.Timeout",false,"0",,,,,,,,false,false,"0"
+S16-000009,"TempRemote",false,"0",,,,,,,,false,false,"0"
 SWR-001507,"Total Scan Count1",false,"0",,,,,,,"Total number of scans since entering Run mode (S32 low word)",,,
 SWR-001508,"Total Scan Count2",false,"0",,,,,,,"Total number of scans since entering Run mode (S32 high word)",,,
+C-000018,"ValveWrite.Complete",false,"0",,,,,,,,false,false,"0"
+C-000020,"ValveWrite.Error",false,"0",,,,,,,,false,false,"0"
+STR-000003,"ValveWrite.ExcResponse",false,,,,15,,,,,,,
+C-000017,"ValveWrite.InProgress",false,"0",,,,,,,,false,false,"0"
+C-000019,"ValveWrite.Success",false,"0",,,,,,,,false,false,"0"
+C-000021,"ValveWrite.Timeout",false,"0",,,,,,,,false,false,"0"
 SBR-001016,"Watchdog Timeout",false,"0",,,,,,,"Active if the overall scan time (logic and I/O) has exceeded the limit set in the project",,,
 DO-0.1.1.1,"doOpenValve",false,"0",000001,000001,,,,,,false,false,"0"
