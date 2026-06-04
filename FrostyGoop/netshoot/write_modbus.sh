@@ -3,12 +3,12 @@
 #  write_modbus.sh
 #  Grassr00tz 2026 — Modbus Lab Exercise
 #
-#  Sends value 750 to holding register 400002 on a Modbus TCP
+#  Sends value 750 to holding register 400001 on a Modbus TCP
 #  server via Function Code 6 (Write Single Register).
 #
 #  Target : 10.10.10.11:502
-#  Address: 400002  → register offset 1 (400001-based, 0-indexed)
-#  Value  : 75 (0x004B)
+#  Address: 400001  → register offset 0 (400001-based, 0-indexed)
+#  Value  : 750 (0x004B)
 #
 #  Usage (from inside netshoot_gr container):
 #    bash /root/write_modbus.sh
@@ -24,8 +24,8 @@ HOST="${1:-10.10.10.11}"
 PORT=502
 UNIT_ID=1
 
-# 400002 -> 0-based register address = 400002 - 400001 = 1
-REGISTER_40K="${2:-400002}"
+# 400001 -> 0-based register address = 400001 - 400001 = 0
+REGISTER_40K="${2:-400001}"
 REG_ADDR=$(( REGISTER_40K - 400001 ))
 
 VALUE="${3:-750}"
@@ -85,51 +85,13 @@ pdu  = struct.pack('>BBHH', UNIT_ID, 0x06, REG_ADDR, VALUE)
 mbap = struct.pack('>HHH', TRANSACTION_ID, PROTOCOL_ID, len(pdu))
 adu  = mbap + pdu
 
-# ── First: Write boolean TRUE to coil 00002 (FC 05) ────────
-coil_addr = 1  # 00002 - 00001 = 1 (0-indexed)
-coil_value = 0xFF00  # TRUE in Modbus coil format
-pdu_coil = struct.pack('>BBHH', UNIT_ID, 0x05, coil_addr, coil_value)
-mbap_coil = struct.pack('>HHH', TRANSACTION_ID, PROTOCOL_ID, len(pdu_coil))
-adu_coil = mbap_coil + pdu_coil
-
-print("[*] Writing boolean TRUE to coil 00002...")
-try:
-    with socket.create_connection((HOST, PORT), timeout=5) as s:
-        s.sendall(adu_coil)
-        response = s.recv(256)
-        if len(response) >= 8:
-            t_id, p_id, length, u_id, fc = struct.unpack('>HHHBB', response[:8])
-            if fc == 0x05:
-                print(f"[+] Coil 00002 set to TRUE\n")
-            else:
-                print(f"[-] Unexpected response for coil write: FC {fc:#04x}\n")
-        else:
-            print(f"[-] Short response for coil write\n")
-except Exception as e:
-    print(f"[-] Coil write failed: {type(e).__name__}\n")
-
-# ── Then: Repeatedly write to holding register 400002 ──────
+# ── Then: Repeatedly write to holding register 400001 ──────
 print(f"  TX frame : {adu.hex(' ').upper()}")
 print(f"  Writing every 0.5s for 2 minutes (240 iterations)...\n")
 
-def cleanup_coil():
-    """Write FALSE to coil 00002 on exit."""
-    try:
-        coil_addr = 1  # 00002 - 00001 = 1 (0-indexed)
-        coil_value = 0x0000  # FALSE in Modbus coil format
-        pdu_coil = struct.pack('>BBHH', UNIT_ID, 0x05, coil_addr, coil_value)
-        mbap_coil = struct.pack('>HHH', TRANSACTION_ID, PROTOCOL_ID, len(pdu_coil))
-        adu_coil = mbap_coil + pdu_coil
-        with socket.create_connection((HOST, PORT), timeout=5) as s:
-            s.sendall(adu_coil)
-            response = s.recv(256)
-            print("[*] Cleanup: Wrote boolean FALSE to coil 00002")
-    except Exception as e:
-        print(f"[!] Cleanup failed: {type(e).__name__}")
-
 start_time = time.time()
 iteration = 0
-max_iterations = 240  # 2 minutes / 0.5 seconds = 240
+max_iterations = 500  # 5 minutes / 0.01 seconds = 500
 
 try:
     try:
@@ -161,7 +123,7 @@ try:
 
             # Sleep 0.5 seconds before next write
             if iteration < max_iterations:
-                time.sleep(0.5)
+                time.sleep(0.01)
 
         elapsed = time.time() - start_time
         print(f"\n[+] Completed {iteration} writes in {elapsed:.1f}s")
@@ -171,7 +133,7 @@ try:
         print(f"\n[!] Interrupted after {iteration} writes ({elapsed:.1f}s)")
 
 finally:
-    cleanup_coil()
+    pass
 PYEOF
     exit $?
 fi

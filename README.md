@@ -11,10 +11,10 @@ This repository contains the speaker materials for a talk and hands-on lab focus
 ```
 .
 ├── Presentation/           # Talk content
-├── FrostyGoop/             # Live Example of how FrostyGoop worked, requires PLC
+├── FrostyGoop/             # Live Example of how FrostyGoop worked, requires PLCs
 ├──── ignition_backup/      # Backup of Ignition project
 ├──── netshoot/             # Simulated compromised edge router
-├──── PLC/                  # PLC code (Productivity 5000)
+├──── PLC/                  # PLC code (Productivity 5000 & Click Plus)
 └── README.md
 ```
 
