@@ -1,0 +1,25 @@
+services:
+  ignition_gr:
+    image: inductiveautomation/ignition:8.3.4
+    volumes:
+      - ignition-data_gr:/usr/local/bin/ignition/data
+    container_name: ignition_gr
+    ports:
+      - "8088:8088"
+    environment:
+      - ACCEPT_IGNITION_EULA=Y
+      - GATEWAY_ADMIN_USERNAME=admin
+      - GATEWAY_ADMIN_PASSWORD=password
+      - IGNITION_EDITION=standard
+    restart: unless-stopped
+  netshoot_gr:
+    image: nicolaka/netshoot:latest
+    container_name: netshoot_gr
+    volumes:
+      - ./netshoot:/root
+    # Keep the container running so you can exec into it
+    # docker exec -it netshoot bash
+    command: ["tail", "-f", "/dev/null"]
+    hostname: netshoot
+volumes:
+  ignition-data_gr:
